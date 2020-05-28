@@ -1,0 +1,19 @@
+(define-fuzzy-logic zadeh)
+(define-modifier very linear-modifier(0.1))
+(define-fuzzy-concept HighTemperature right-shoulder(0.0, 100.0, 30.0, 100.0))
+(define-fuzzy-concept Smoky right-shoulder(0.0, 10.0, 3.0, 10.0))
+(define-fuzzy-concept Desolate left-shoulder(30.0, 100.0, 30.0, 100.0) )
+(functional temperature)
+(functional smokeLevel)
+(functional numberOfMovements)
+(range temperature *integer* 0 100)
+(range smokeLevel *integer* 0 10)
+(range numberOfMovements *integer* 0 100)
+
+(define-concept FireRisk (or (and (some temperature HighTemperature) (some smokeLevel  Smoky)) (and (some numberOfMovements Desolate) (some temperature HighTemperature)) (and (some numberOfMovements Desolate) (some smokeLevel  Smoky)) ))
+
+(instance home (= temperature {temperature}) )
+(instance home (= smokeLevel {smokeLevel}) )
+(instance home (= numberOfMovements {numberOfMovements}))
+
+(max-instance? home FireRisk)
